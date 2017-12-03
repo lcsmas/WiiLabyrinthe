@@ -20,7 +20,7 @@ while i==0 :
 	if keyboard.is_pressed('space') :
 		i = 1
 	
-	p.changeDutyCycle(dutyCycle)
+	p.ChangeDutyCycle(dutyCycle)
 	
 p.stop()
 GPIO.cleanup()
