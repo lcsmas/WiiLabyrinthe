@@ -22,6 +22,7 @@ def keydown(e):
 		dutyCycle = dutyCycle - 0.1
 	
 	if keyboard.is_pressed('space') :
+		i = 1
 
 keyboard.hook(keydown)
 
@@ -34,9 +35,7 @@ while i==0 :
 p.stop()
 GPIO.cleanup()
 
-
-
-		i = 1
+		
 
 def angleToDutyCycle(a) :
 	return float(a)/10 + 5
