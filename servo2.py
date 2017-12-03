@@ -29,6 +29,7 @@ keyboard.hook(keydown)
 	
 	
 while i==0 :
+	keyboard.wait()
 	p.ChangeDutyCycle(dutyCycle)
 	
 	
