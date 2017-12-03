@@ -14,6 +14,15 @@ i = 0
 p.start(dutyCycle)
 
 
+def keydown(e):
+	if keyboard.is_pressed('up') and dutyCycle <= 23:
+		dutyCycle = dutyCycle + 0.1
+
+	if keyboard.is_pressed('down') and dutyCycle >= 5 :
+		dutyCycle = dutyCycle - 0.1
+	
+	if keyboard.is_pressed('space') :
+
 keyboard.hook(keydown)
 
 	
@@ -26,14 +35,7 @@ p.stop()
 GPIO.cleanup()
 
 
-def keydown(e):
-	if keyboard.is_pressed('up') and dutyCycle <= 23:
-		dutyCycle = dutyCycle + 0.1
 
-	if keyboard.is_pressed('down') and dutyCycle >= 5 :
-		dutyCycle = dutyCycle - 0.1
-	
-	if keyboard.is_pressed('space') :
 		i = 1
 
 def angleToDutyCycle(a) :
