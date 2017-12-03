@@ -9,7 +9,7 @@ dutyCycle = 0
 p.start(dutyCycle)
 
 i = 0
-while i=0 :
+while i==0 :
 	if keyboard.is_pressed('up') and dutyCycle <= 23:
 		dutyCycle = dutyCycle + 0.1
 
