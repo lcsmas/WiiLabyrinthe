@@ -6,7 +6,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.OUT)
 GPIO.setwarnings(False)
 
-#Déclaration des variables
+#Declaration des variables
 p = GPIO.PWM(17,100)
 dutyCycle = 0
 i = 0
