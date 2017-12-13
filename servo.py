@@ -1,52 +1,51 @@
 import RPi.GPIO as GPIO
 import time
+		
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.OUT)
-GPIO.setwarnings(False)
+#def angleToDutyCycle(a) :
+#	return float(a)/10 + 5
 
-ajoutAngle = 5
+def init() :
+	GPIO.setmode(GPIO.BCM)
+	#On configure les pin GPIO17 et GPIO27 du bloc GPIO de la raspberry comme des 
+	#sorties, 
+	# la pin 17 pour les donnees du moteur 1
+	# la pin 27 pour les donnees du moteur 2
+	GPIO.setup(17, GPIO.OUT)
+	GPIO.setup(27, GPIO.OUT)
 
-print("\n+----------/ ServoMoteur  Controlleur /----------+")
-print("|                                                |")
-print("| Le Servo doit etre branche au pin 11 / GPIO 17 |")
-print("|                                                |")
-print("+------------------------------------------------+\n")
+	GPIO.setwarnings(False)
 
-print("Comment controler le Servo ?")
-choix = input("1. Choisir un angle\n2. Faire tourner de 0 a 180\n")
+	#Declaration des variables
 
-if choix == 2 :
+	#On attribue la fonction PWM du GPIO aux pins 17 et 27
+	#La fonction PWM permet de simuler un signal analogique 
+	moteur_x = GPIO.PWM(17,100)
+	moteur_y = GPIO.PWM(27,100)
+	moteur_x.start(14)
+	moteur_y.start(14)
+	return [moteur_x, moteur_y]
+	
+def stop() :
+	moteur_x.stop()
+	moteur_y.stop()
+	GPIO.cleanup()
 
-    nbrTour = input ("Entrez le nombre d'aller-retour que fera le Servo :\n")
+def coordonne_to_position_moteur_x(moteur, coord) :
+	dc = coordonnee_x_to_duty_cycle(coord)
+	moteur.ChangeDutyCycle(dc)
+	return moteur
+	
+def coordonne_to_position_moteur_y(moteur, coord) :
+	dc = coordonnee_y_to_duty_cycle(coord)
+	moteur.ChangeDutyCycle(dc)
+	return moteur
 
-    pwm=GPIO.PWM(17,100)
-    pwm.start(5)
+def coordonnee_x_to_duty_cycle(x) :
+	res = (1.0/11.0)*x + 31.0/11.0
+	return res
 
-    angle1 = 0
-    duty1 = float(angle1)/10 + ajoutAngle
-
-    angle2=180
-    duty2= float(angle2)/10 + ajoutAngle
-
-    i = 0
-
-    while i <= nbrTour:
-         pwm.ChangeDutyCycle(duty1)
-         time.sleep(0.8)
-         pwm.ChangeDutyCycle(duty2)
-         time.sleep(0.8)
-         i = i+1
-    GPIO.cleanup()
-
-if choix == 1 :
-    angle = input("Entrez l'angle souhaite :\n")
-    duree = input("Entrez la duree durant laquelle le Servo devra tenir sa position : ( en secondes )\n")
-
-    pwm=GPIO.PWM(17,100)
-    pwm.start(5)
-
-    angleChoisi = float(angle)/10 + ajoutAngle
-    pwm.ChangeDutyCycle(angleChoisi)
-    time.sleep(duree)
-    GPIO.cleanup()
+def coordonnee_y_to_duty_cycle(x) :
+	res = 9.0/94.0*x + 137.0/94.0
+	return res
+	
