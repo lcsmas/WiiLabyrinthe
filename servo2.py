@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 import keyboard
+from pynput import keyboard
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.OUT)
@@ -13,35 +14,29 @@ i = 0
 
 p.start(dutyCycle)
 
-def up():
-	print("u")
-	if dutyCycle <= 23:
-		dutyCycle = dutyCycle + 0.1
-		print("u")
-		return
-
-keyboard.hook(up)
-def down():
-	if dutyCycle >= 5 :
+def on_press(key):
+    if key == keyboard.Key.z and dutyCycle <= 23:
+        dutyCycle = dutyCycle + 0.1
+    if key == keyboard.Key.s and dutyCycle >= 5 :
 		dutyCycle = dutyCycle - 0.1
-		print("d")
-		return
 
-def space():
-	print("space")
-	i = 1
-	return
 
-keyboard.add_hotkey("z",up)
-keyboard.add_hotkey("s",down)
-keyboard.add_hotkey("space",space)
+def on_release(key):
+    print('{0} released'.format(
+        key))
+    if key == keyboard.Key.esc:
+        # Stop listener
+        return False
+
+# Collect events until released
+with keyboard.Listener(
+        on_press=on_press,
+        on_release=on_release) as listener:
+    listener.join()
 
 	
 while i==0 :
-	keyboard.read_key()
-	print("ntm")
 	p.ChangeDutyCycle(dutyCycle)
-	
 	
 p.stop()
 GPIO.cleanup()
