@@ -13,23 +13,33 @@ i = 0
 
 p.start(dutyCycle)
 
-
-def keydown(e):
-	if keyboard.is_pressed('up') and dutyCycle <= 23:
+def up():
+	print("u")
+	if dutyCycle <= 23:
 		dutyCycle = dutyCycle + 0.1
+		print("u")
+		return
 
-	if keyboard.is_pressed('down') and dutyCycle >= 5 :
+keyboard.hook(up)
+def down():
+	if dutyCycle >= 5 :
 		dutyCycle = dutyCycle - 0.1
-	
-	if keyboard.is_pressed('space') :
-		i = 1
+		print("d")
+		return
 
-keyboard.hook(keydown)
+def space():
+	print("space")
+	i = 1
+	return
 
-	
+keyboard.add_hotkey("z",up)
+keyboard.add_hotkey("s",down)
+keyboard.add_hotkey("space",space)
+
 	
 while i==0 :
-	keyboard.wait()
+	keyboard.read_key()
+	print("ntm")
 	p.ChangeDutyCycle(dutyCycle)
 	
 	
