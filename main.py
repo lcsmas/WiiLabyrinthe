@@ -6,11 +6,11 @@ import cwiid
 import nunchuk
 import servo
 from grovepi import *
-#from grovepi_rgb_lcd import *
+from grove_rgb_lcd import *
 
 #Initialisation de l'écran
 
-#setText("WiiLabyrinthe")
+setText("WiiLabyrinthe")
 
 
 def main() :

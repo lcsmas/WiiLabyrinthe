@@ -26,7 +26,7 @@ def init() :
 	moteur_y.start(14)
 	return [moteur_x, moteur_y]
 	
-def stop() :
+def stop(moteur_x,moteur_y) :
 	moteur_x.stop()
 	moteur_y.stop()
 	GPIO.cleanup()
