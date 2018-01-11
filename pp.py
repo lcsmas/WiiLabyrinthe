@@ -8,6 +8,7 @@ import servo
 from grovepi import *
 from grove_rgb_lcd import *
 import luminosite
+import manipfile
 
 #Initialisation de l'écran
 
@@ -72,6 +73,7 @@ def partie(wm,moteur_x,moteur_y):
 			return end()
 	servo.stop(moteur_x,moteur_y)
 	t=time.time()-t0
+        manipfile.writeScore(t)
 	setText("Temps"+str(t))
 	time.sleep(2)
 	if t<25:
@@ -97,5 +99,8 @@ def partie(wm,moteur_x,moteur_y):
 
 
 main()
+
+
+
 
 
